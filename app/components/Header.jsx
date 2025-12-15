@@ -38,7 +38,7 @@ const Header = () => {
 
     {/* User Button */}
     <UserButton
-      afterSignOutUrl="/"
+     
       appearance={{
         elements: { avatarBox: "w-9 h-9" },
       }}
