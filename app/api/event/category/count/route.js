@@ -3,9 +3,13 @@ import Event from "@/models/eventModel";
 import { NextResponse } from "next/server";
 
 export const GET = safeHandler( async () => {
-  const categoryCounts = await Event.aggregate([
+  const res = await Event.aggregate([
     { $group: { _id: "$category", count: { $sum: 1 } } }
   ]);
+  const categoryCounts = res.reduce((acc, item) => {
+  acc[item._id] = item.count;
+  return acc;
+}, {});
   console.log("Event category counts fetched:", categoryCounts);    
   return NextResponse.json({
     success:true,
