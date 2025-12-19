@@ -30,9 +30,9 @@ const page = () => {
     isLoading: loadingHyderabad,
     error: errorHyderabad,
   } = useGet("/event/location");
-  console.log(categoryCounts, "categoryCounts");
-  console.log(eventsHyderabad, "eventsHyderabad");
-  // console.log(categoryCounts,"categoryCounts");
+  //(categoryCounts, "categoryCounts");
+  //(eventsHyderabad, "eventsHyderabad");
+  // //(categoryCounts,"categoryCounts");
   const handleEventClick = (eventId) => {
     // Navigate to event details page
     router.push(`/events/${eventId}`);
@@ -41,11 +41,11 @@ const page = () => {
   const handleCategoryClick = (categoryId) => {
     router.push(`/explore/${categoryId}`);
   };
-const categoriesWithCounts = CATEGORIES.map((cat) => ({
+  const categoriesWithCounts = CATEGORIES.map((cat) => ({
     ...cat,
     count: categoryCounts?.[cat.id] || 0,
   }));
-  console.log(categoriesWithCounts,"categoriesWithCounts");
+  //(categoriesWithCounts,"categoriesWithCounts");
   return (
     <>
       <div className="pb-12 text-center">
@@ -64,7 +64,6 @@ const categoriesWithCounts = CATEGORIES.map((cat) => ({
               key={event._id}
               className="border-2 p-4 m-2 rounded-md w-[200] "
               onClick={() => handleEventClick(event._id)}
-              
             >
               <img src={event.coverImage} alt={event.title} width="200" />
             </div>

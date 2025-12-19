@@ -6,11 +6,20 @@ import logo from "@/public/logo.png";
 import { Building, Crown, Plus, Search, Sparkles, Ticket } from "lucide-react";
 import { SignInButton, useAuth, UserButton, useUser } from "@clerk/nextjs";
 import SearchLocationBar from "./SearchLocationBar";
+import { BarLoader } from "react-spinners";
+import { useStoreUser } from "@/hooks/useStoreUser";  
+import Onboarding from "./Onboarding";
+import { useOnboarding } from "@/hooks/useOnboarding";
 const Header = () => {
-  const { isSignedIn, user } = useUser();
+  
+  const {isLoading,isAuthenticated} = useStoreUser();
+
+   const {showOnboarding, handleOnboardingComplete, handleOnboardingSkip, needsOnboarding} = useOnboarding();
+   
+   
   return (
     <>
-      <nav className="flex items-center justify-between px-5 py-1 border-b border-gray-800">
+      <nav className="flex relative items-center justify-between px-5 py-1 border-b border-gray-800">
         <Link href="/">
           <Image src={logo} alt="Logo" width={220} height={150} />
         </Link>
@@ -26,7 +35,7 @@ const Header = () => {
 
           {/* <Link href="">Sign In</Link> */}
           {/* User Button */}
-          {isSignedIn && (
+          {isAuthenticated && (
   <>
     {/* Create Event Button */}
     <button>
@@ -60,14 +69,32 @@ const Header = () => {
   </>
 )}
 
-          {!isSignedIn && (
+          {!isAuthenticated && (
   <SignInButton mode="modal">
     <button className="cursor-pointer bg-blue-600 px-3 py-2 rounded-md hover:bg-blue-700 transition">Sign In</button>
   </SignInButton>
 )}
 
         </div>
+
+        {isLoading && (
+          <div className="absolute bottom-0 left-0 w-full">
+            <BarLoader width={"100%"} color="#a855f7" />
+          </div>
+        )}
       </nav>
+
+
+
+      <Onboarding
+
+      isOpen={showOnboarding}
+        onClose={handleOnboardingSkip}
+        onComplete={handleOnboardingComplete}
+
+      />
+
+
     </>
   );
 };

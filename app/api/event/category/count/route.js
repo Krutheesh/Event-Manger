@@ -2,20 +2,19 @@ import { safeHandler } from "@/lib/safeHandler";
 import Event from "@/models/eventModel";
 import { NextResponse } from "next/server";
 
-export const GET = safeHandler( async () => {
+export const GET = safeHandler(async () => {
   const res = await Event.aggregate([
-    { $group: { _id: "$category", count: { $sum: 1 } } }
+    { $group: { _id: "$category", count: { $sum: 1 } } },
   ]);
   const categoryCounts = res.reduce((acc, item) => {
-  acc[item._id] = item.count;
-  return acc;
-}, {});
-  console.log("Event category counts fetched:", categoryCounts);    
+    acc[item._id] = item.count;
+    return acc;
+  }, {});
+  //("Event category counts fetched:", categoryCounts);
   return NextResponse.json({
-    success:true,
-    message:"Event category counts fetched successfully",
-    data:categoryCounts,
-    status:categoryCounts?.status|| 200
-  })
-}
-)
+    success: true,
+    message: "Event category counts fetched successfully",
+    data: categoryCounts,
+    status: categoryCounts?.status || 200,
+  });
+});

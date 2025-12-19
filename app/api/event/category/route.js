@@ -1,10 +1,10 @@
 // import { safeHandler } from "@/lib/safeHandler";
-// import Event from "@/models/eventModel";  
+// import Event from "@/models/eventModel";
 // import { NextResponse } from "next/server";
 
 // export const GET = safeHandler( async () => {
 //   const categories = await Event.distinct("category");
-//   console.log("Event categories fetched:", categories); 
+//   //("Event categories fetched:", categories);
 //   return NextResponse.json({
 //     success:true,
 

@@ -1,7 +1,7 @@
 "use client"; 
 
 import { useState } from "react";
-import api from "@/"; // <-- your axios instance
+import api from "@/lib"; // <-- your axios instance
 
 export const useAction = () => {
   const [data, setData] = useState(null);

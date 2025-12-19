@@ -8,20 +8,24 @@ import Event from "@/models/eventModel";
  * ============================
  */
 
-export async function GET(){
+export async function GET() {
   try {
     await dbConnect();
-    console.log("iam from server route")
+    //("iam from server route")
     const result = await Event.find().sort({ createdAt: -1 });
-  
+
     return NextResponse.json(
- { success: true, message: "Events fetched successfully",data:result},
+      { success: true, message: "Events fetched successfully", data: result },
       { status: 200 }
     );
   } catch (error) {
-    console.log("Error fetching events:", error);
+    //("Error fetching events:", error);
     return NextResponse.json(
-       { success: false, message: "Error fetching events", error: error.message },
+      {
+        success: false,
+        message: "Error fetching events",
+        error: error.message,
+      },
       { status: 500 }
     );
   }

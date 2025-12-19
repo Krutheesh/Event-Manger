@@ -1,54 +1,41 @@
 "use client";
-import { useState,useEffect } from "react";
+import { useState, useEffect } from "react";
 import api from "@/lib/api";
 
 const useGet = (url) => {
-const [data, setData] = useState(null);
-const [isLoading, setIsLoading] = useState(true);
-const [error, setError] = useState(null);
-let cancel = false;
-const fetchData = async () => {
-  setIsLoading(true);
-  try{
-    const res = await api.get(url);
-    if(!cancel) {
-      // console.log("response from useGet", res);
-      setData(res.data.data);
+  const [data, setData] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
+  
+
+  const fetchData = async () => {
+    setIsLoading(true);
+    //("fetching data from useGet", url);
+    try {
+      const res = await api.get(url);
+     
+        // //("response from useGet", res);
+        setData(res.data.data);
+      
+    } catch (err) {
+      
+        setError(err?.message || err || "Something went wrong");
+      
+    } finally {
+      
+        setIsLoading(false);
+      
     }
+  };
 
-  }
-  catch(err){
-     if(!cancel){
-      setError(err?.message ||err|| "Something went wrong");
-     }
-  }
-  finally{
-    if(!cancel){
-      setIsLoading(false);
-    }
-  }
-}
+  useEffect(() => {
+    if (!url) return;
+    fetchData();
+  }, [url]);
 
-useEffect(() => {
-  if(!url) return;
- fetchData();
- 
-},[url])
-
-return {data, isLoading, error};
-}
+  return { data, isLoading, error };
+};
 export default useGet;
-
-
-
-
-
-
-
-
-
-
-
 
 // import { useState } from "react";
 // import { useEffect } from "react";
@@ -61,7 +48,7 @@ export default useGet;
 //       setIsLoading(true);
 //       const result = await fetch("/api/event");
 //       const data = await result.json();
-//       console.log("dat", data);
+//       //("dat", data);
 //       setData(data.data);
 //       setError(null);
 //     } catch (error) {
